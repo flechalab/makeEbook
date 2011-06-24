@@ -25,7 +25,7 @@ class makeEbookHTMLTest extends \PHPUnit_Framework_TestCase {
         $a    = 1;//9;
 
         // url var 2 (item)
-        $b    = 11;
+        $b    = 2;
 
         $urls = array();
 
