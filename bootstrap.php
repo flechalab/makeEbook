@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto Load Class Function
+ * Main Auto Load Class Function
  * @param string $class
  */
 function loadClass($class) {
