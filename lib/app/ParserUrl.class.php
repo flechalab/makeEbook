@@ -46,23 +46,45 @@ class ParserUrl extends Parser {
             $xp = new \DomXPath($dom);
 
             // dom content
-            $menu       = $xp->query("//{$tag_main}[@$attr_name='{$attr_value}']");
-            $menu_itens = $xp->query(".//a", $menu->item(0));
+            $menu = $xp->query("//{$tag_main}[@$attr_name='{$attr_value}']");
+            
+            $links = array();
+            
+            foreach($menu as $menu_item) {
+                $itens = $xp->query(".//a", $menu_item);
+                foreach($itens as $item) {
+                    $links[] = $item->getAttribute('href');
+                }
+            }
+            //@todo query get all items from menu (loop), not just item 0, 
+            // sometimes it's necessary because there is a lot of div/items with links that would
+            // like to get href (links)
+            //$menu_itens = $xp->query(".//a", $menu->item(0));
             
             // get each item from menu and add to array
-            foreach ($menu_itens as $item) {
+            //foreach ($menu_itens as $item) {
+            foreach ($links as $href) {
                 
-                $href = $item->getAttribute('href');
+                //$href = $item->getAttribute('href');
+                                
+                if(substr($href, 0, 7)=='http://') {
+                    continue;
+                }
+                
+                if(substr($href, 0, 1)=='/') {
+                    $host = (\parse_url($this->main_url, \PHP_URL_SCHEME)) . '://' .
+                    (\parse_url($this->main_url, \PHP_URL_HOST));
+                    $href = $host . $href;
+                }
+                else {
+                    $href = $this->main_url . $href;
+                }
                 
                 if(\in_array($href, $this->menu_urls)) {
                     continue;
                 }
                 
-                if(substr($href, 0, 7)=='http://') {
-                    continue;
-                }
-                
-                $this->menu_urls[] = $this->main_url . $href;
+                $this->menu_urls[] = $href;
             }
         }
         catch(Exception $e) {

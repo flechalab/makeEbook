@@ -41,7 +41,7 @@ class getUrls {
     }
     
     /**
-     * remove unappropriate tags
+     * remove unappropriate tags, using regex, before set dom document
      * @param string $tag
      * @param string $id
      * @param string $class 

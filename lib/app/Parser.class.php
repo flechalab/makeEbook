@@ -40,10 +40,16 @@ class Parser {
     protected $clear;
 
     /**
-     * css nodeList from html
-     * @var nodeList 
+     * css array with list from css files from html
+     * @var array 
      */
     protected $css;
+    
+    /**
+     * imgs path array
+     * @var array 
+     */
+    protected $imgs = array();
     
     /**
      * content id with a number to avoid duplicate id in HTML
@@ -76,23 +82,14 @@ class Parser {
 
             preg_match_all('/<head(.*)<\/head>/s', $html, $head);
             preg_match_all('/<body(.*)<\/body>/s', $html, $body);
-            $head = preg_replace('/<script(.*)<\/script>/s', '', $head[0][0]);
-            $body = preg_replace('/<script(.*)<\/script>/s', '', $body[0][0]);
+            $head = preg_replace('@<script[^>](.*?)>(.*?)</script>@si', '', $head[0][0]);
+            $body = preg_replace('@<script[^>](.*?)>(.*?)</script>@si', '', $body[0][0]);
             $body = preg_replace('/<\/?center>/s', '', $body);
 
             // removing div
             foreach($this->parserRemoveTags as $item) {
                 $body = preg_replace($item, '', $body);
             }
-            
-            /* TODO 
-             * 
-             * IMPLEMENTING TO ADD IMAGES ON FILES !!!!
-             * 
-             * removing img
-             * just for test pdf file
-             */
-            $body = preg_replace('/<img(.*)?src=\"(.*).png\"(.*)?\/>/i', '', $body);
             
             // full html
             $html = '<html>' . $head . $body . '</html>';
@@ -108,7 +105,7 @@ class Parser {
             throw new \Exception("Parser Error! \r\n {$e->getMessage()}");
         }
     }
-
+    
     /**
      * define rules to execute regex and remove unecessary tags
      * IMPORTANT: set this method before parserHTML
@@ -131,7 +128,6 @@ class Parser {
         
         // --- including clsss ---
         if($class) {
-            // @TODO 
             //$exp .= '(.*[^>])? class=[\\\'\"]?' . $class . '[\\\'\"]?(.*[^>])?';
         }
 
@@ -144,10 +140,17 @@ class Parser {
     }
     
     /**
+     * define rule to remove img tags
+     */
+    public function parserRemoveTagsImgs() {
+        $this->parserRemoveTags[] = '/<img(.*)?src=\"(.*).[png|jpg|jpeg|gif]\"(.*)?\/>/i';
+    }
+    
+    /**
      * get the html file load to dom, extract defined data and insert in new Dom
      * @param string $content_id
      * @param string $header_id
-     * @param mixed  $clear_id
+     * @param array  $clear_id    key = attribute / value = value
      */
     public function setDom($content_id, $header_id=false, $clear_id=false) {
 
@@ -157,7 +160,7 @@ class Parser {
 
         // loading DOM
 		$dom = new \domDocument;
-		if($dom->loadHTML($this->html)==false) {
+		if(@$dom->loadHTML($this->html)==false) {
 			throw new \Exception("HTML Dom Error");
 		}
 
@@ -177,18 +180,36 @@ class Parser {
             }
 
             // dom clear
-            if(count($clear_id)>0) {
-                foreach ($clear_id as $attr=>$value) {
-                    $remove = $xp->query("//*[@{$attr} = '{$value}']");
-                    $this->content->item(0)->removeChild($remove->item(0));
-                }
+            foreach ($clear_id as $item) {
+                $attr   = key($item);
+                $value  = current($item);
+                $remove = $xp->query("//*[@{$attr} = '{$value}']");
+                $this->content->item(0)->removeChild($remove->item(0));
             }
 
             // css
-            $this->css = $xp->query("//link[@rel = 'stylesheet'] ");
+            //$this->css  = $xp->query("//link[@rel = 'stylesheet'] ");
+            $css_nodes = $xp->query("//link[@rel = 'stylesheet'] ");
 
+            if($css_nodes->length>0) {
+                foreach ($css_nodes as $item) {
+                    if(!in_array($item->getAttribute('href'), $this->css)) {
+                        $this->css[] = $item->getAttribute('href');    
+                    }
+                }
+            }
+
+            // img
+            $img_nodes  = $xp->query("//img");
+            
+            if($img_nodes->length>0) {
+                foreach ($img_nodes as $item) {
+                    $this->imgs[] = $item->getAttribute('src');
+                }
+            }
+            
             // importing header node
-            if($this->pages==0) {
+            if($this->pages==0 && isset($header_id)) {
                 $this->appendDom($this->header->item(0));
             }
 
@@ -241,11 +262,19 @@ class Parser {
     }
     
     /**
-     * return node list with css files attached in html
-     * @return nodeList 
+     * return array list with css files attached in html
+     * @return array 
      */
     public function getCSS() {
         return $this->css;
+    }
+    
+    /**
+     * return array list with imgs paths in html
+     * @return array 
+     */
+    public function getImgs() {
+        return $this->imgs;
     }
 
 }

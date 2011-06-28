@@ -23,7 +23,8 @@ class makeEbookFile extends makeEbook {
     public function __construct($url, $filename) {
         try {
             parent::__construct($url);
-            $this->filename = makeEbook::MAKEEBOOK_FILESAVE_PATH . $filename;
+            $this->filename = makeEbook::MAKEEBOOK_ROOT_PATH . 
+                              makeEbook::MAKEEBOOK_FILESAVE_PATH . $filename;
         }
         catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -36,9 +37,9 @@ class makeEbookFile extends makeEbook {
      */
     public function output() {
         try {
-            $this->file->makeFile(__DIR__ . '/' . $this->filename);
+            $this->file->makeFile($this->filename);
             $this->setOutputLog();
-            $this->setLog('File generated in ' . __DIR__ . '/' . $this->filename);
+            $this->setLog('File generated in ' . $this->filename);
         }
         catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -49,6 +50,6 @@ class makeEbookFile extends makeEbook {
      * return files's path and filename
      */
     public function getFilename() {
-        return __DIR__ . '/' . $this->filename;
+        return $this->filename;
     }
 }

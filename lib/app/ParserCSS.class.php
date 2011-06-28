@@ -22,8 +22,8 @@ class ParserCSS {
     private $urls = array();
 
     /**
-     * css/style node
-     * @var nodeList
+     * css/style rules (string)
+     * @var string
      */
     private $css;
     

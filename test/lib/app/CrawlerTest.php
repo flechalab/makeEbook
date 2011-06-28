@@ -32,103 +32,117 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @todo Implement testSetUrls().
+     * testSetUrls()
      */
     public function testSetUrls() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        try {
+            $this->object->setUrls('http://uol.com.br');
+        } 
+        catch (Exception $e) {
+            $this->fail('Error: ' . __FUNCTION__ . chr(10) . $e->getMessage());
+        }
     }
 
     /**
-     * @todo Implement testGetUrls().
+     * testGetUrls()
      */
     public function testGetUrls() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        try {
+            $result = $this->object->getUrls();
+        } 
+        catch (Exception $e) {
+            $this->fail('Error: ' . __FUNCTION__ . chr(10) . $e->getMessage());
+        }
+        $this->assertInternalType(\PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $result);
     }
 
     /**
-     * @todo Implement testSettings().
+     * testSettings()
      */
     public function testSettings() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        try {
+            $this->object->settings();
+        } 
+        catch (Exception $e) {
+            $this->fail('Error: ' . __FUNCTION__ . chr(10) . $e->getMessage());
+        }
     }
 
     /**
-     * @todo Implement testSetFile().
+     * testSetFile()
      */
     public function testSetFile() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        // method disabled 
     }
 
     /**
-     * @todo Implement testSetString().
+     * testSetString().
      */
     public function testSetString() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        try {
+            $this->object->setString();
+        } 
+        catch (Exception $e) {
+            $this->fail('Error: ' . __FUNCTION__ . chr(10) . $e->getMessage());
+        }
     }
 
     /**
-     * @todo Implement testExec().
+     * testExec().
      */
     public function testExec() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->exec();
     }
 
     /**
-     * @todo Implement testGetResult().
+     * testGetResult().
      */
     public function testGetResult() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        try {
+            $result = $this->object->getUrls();
+        } 
+        catch (Exception $e) {
+            $this->fail('Error: ' . __FUNCTION__ . chr(10) . $e->getMessage());
+        }
+        $this->assertInternalType(\PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $result);
     }
 
     /**
-     * @todo Implement testInfo().
+     * testInfo().
      */
     public function testInfo() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        try {
+            $result = $this->object->info();
+        } 
+        catch (Exception $e) {
+            $this->fail('Error: ' . __FUNCTION__ . chr(10) . $e->getMessage());
+        }
+        $this->assertInternalType(\PHPUnit_Framework_Constraint_IsType::TYPE_STRING, $result);
     }
 
     /**
-     * @todo Implement testInfo_status().
+     * testInfo_status().
      */
     public function testInfo_status() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        try {
+            $result = $this->object->info_status();
+        } 
+        catch (Exception $e) {
+            $this->fail('Error: ' . __FUNCTION__ . chr(10) . $e->getMessage());
+        }
+        $this->assertInternalType(\PHPUnit_Framework_Constraint_IsType::TYPE_STRING, $result);
     }
 
     /**
-     * @todo Implement testClose().
+     * testClose().
      */
     public function testClose() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        try {
+            $result = $this->object->close();
+        } 
+        catch (Exception $e) {
+            $this->fail('Error: ' . __FUNCTION__ . chr(10) . $e->getMessage());
+        }
     }
 
 }

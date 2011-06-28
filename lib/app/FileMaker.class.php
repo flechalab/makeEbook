@@ -8,19 +8,52 @@ class FileMaker {
 
     public function __construct() { }
 
+    /**
+     * return html var (string/bin)
+     * @return string 
+     */
     public function getHtml() {
         return $this->html;
     }
 
+    /**
+     * set the html var with data (html/bin)
+     * @param string $html 
+     */
     public function setHtml($html) {
         $this->html = $html;
     }
 
     /**
-     * parsing html, get header/content
+     * print html result
      */
     public function makeHtml() {
+        $this->setImgRelPath();
         echo $this->html;
+    }
+    
+    /**
+     * use regex to convert the path from imgs to absolute paths (necessary to pdf files)
+     */
+    public function setImgAbsPath() {
+        // removing slash(/) from first position of img path
+        $pattern = '/<img([^>].*)src=["\']?[\/]?([^"\']*)["\']?([^>\/].*)?>/i';
+        // add abs path (complete path) to img path
+        $replace = '<img$1src="'. makeEbook::MAKEEBOOK_ROOT_PATH . makeEbook::MAKEEBOOK_FILESAVE_PATH . '$2" $3 />';
+        // exec regex replacement
+        $this->html = preg_replace($pattern, $replace, $this->html);
+    }
+
+    /**
+     * use regex to convert imgs path to relative (html files)
+     */
+    public function setImgRelPath() {
+        // removing slash(/) from first position of img path
+        $pattern = '/<img([^>].*)src=["\']?[\/]?([^"\']*)["\']?([^>\/].*)?>/i';
+        // setting the img path using actual path
+        $replace = '<img$1src="$2" $3 />';
+        // exec regex replacement
+        $this->html = preg_replace($pattern, $replace, $this->html);
     }
 
     /**
@@ -30,9 +63,17 @@ class FileMaker {
     public function makeFile($filename) {
         ErrorHandler::set();
         try {
+            
+            $pathinfo = pathinfo($filename);
+            if(!empty($pathinfo['dirname']) && !is_dir($pathinfo['dirname'])) {
+                mkdir($pathinfo['dirname'], 0777, TRUE);
+            }
+            
+            $this->setImgRelPath();
             $handle = fopen($filename, 'w');
             fwrite($handle, $this->html);
             fclose($handle);
+            chmod($filename, 0777);
         }
         catch (\Exception $e) {
             throw new \Exception('Error to create File. ' . \PHP_EOL . $e->getMessage());
@@ -40,13 +81,13 @@ class FileMaker {
     }
 
     /**
-     * Define output curl to generate PDF file
+     * output data into PDF file
+     * @param string $filename
+     * @param string $title
+     * @param string $header
      */
     public function makePdf($filename, $title=false, $header=false) {
 
-        /* TODO 
-         * add css files in code/html <style> tag
-         */
         try {
             global $l;
             // create new PDF document
@@ -98,6 +139,7 @@ class FileMaker {
             $this->pdf->AddPage();
 
             // Set some content to print
+            $this->setImgAbsPath();
             $html = $this->html;
 
             // Print text using writeHTMLCell()

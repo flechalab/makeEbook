@@ -28,7 +28,8 @@ class makeEbookPDF extends makeEbook {
     public function __construct($url, $filename) {
         try {
             parent::__construct($url);
-            $this->filename = makeEbook::MAKEEBOOK_FILESAVE_PATH . $filename;
+            $this->filename = makeEbook::MAKEEBOOK_ROOT_PATH . 
+                              makeEbook::MAKEEBOOK_FILESAVE_PATH . $filename;
         }
         catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -42,9 +43,13 @@ class makeEbookPDF extends makeEbook {
     public function output() {
         ErrorHandler::set();
         try {
-            //$header = ;
-            $this->file->makePdf(__DIR__ . '/' . $this->filename, trim($this->parser->getHeader()
-                    ->item(0)->nodeValue));
+            $header = $this->parser->getHeader();
+            
+            if($header) {
+                $header = trim($header->item(0)->nodeValue);
+            }
+                    
+            $this->file->makePdf($this->filename, $header);
             $this->setOutputLog();
             $this->setLog('PDF generated');
         }
@@ -57,6 +62,6 @@ class makeEbookPDF extends makeEbook {
      * return files's path and filename
      */
     public function getFilename() {
-        return __DIR__ . '/' . $this->filename;
+        return $this->filename;
     }
 }

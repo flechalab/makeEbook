@@ -10,9 +10,14 @@ namespace MakeEbook;
 abstract class makeEbook {
 
     /**
+     * root project's path
+     */
+    const MAKEEBOOK_ROOT_PATH = __DIR__;
+    
+    /**
      * path to save files
      */
-    const MAKEEBOOK_FILESAVE_PATH = 'files/';
+    const MAKEEBOOK_FILESAVE_PATH = '/files/';
 
     /**
      * constant to identify the message error of makeEbook class
@@ -81,6 +86,12 @@ abstract class makeEbook {
      * @var boolean
      */
     protected $useCSS;
+    
+    /**
+     * define if remove img tags from html on parser
+     * @var boolean 
+     */
+    protected $removeImgs;
 
     /**
      * object constructor, build a crwaler object, parser object and makefile object
@@ -105,12 +116,20 @@ abstract class makeEbook {
         }
     }
 
+    /**
+     * set the host and path (dir) from main url
+     * @param mixed $url string/array with urls
+     */
     public function parserUrl($url) {
+        // setting host url
         $url = \is_array($url) ? $url : array($url);
         $this->url_host = (\parse_url($url[0], \PHP_URL_SCHEME)) . '://' .
                 (\parse_url($url[0], \PHP_URL_HOST));
 
-        $this->url_path = \parse_url($url[0], \PHP_URL_PATH) . '/';
+        // setting path url
+        $path     = \parse_url($url[0], \PHP_URL_PATH) . '/';
+        $pathinfo = pathinfo($path);
+        $this->url_path = $pathinfo['dirname'];
     }
 
     /**
@@ -131,10 +150,13 @@ abstract class makeEbook {
 
     /**
      * array with ids to remove from dom 
-     * @param mixed $clear
+     * @param array $clear
      */
     public function setClear($clear) {
-        $this->clear_id = is_array($clear) ? $clear : array($clear);
+        if(!is_array($clear)) {
+            return;
+        }
+        $this->clear_id = $clear;
     }
 
     /**
@@ -144,6 +166,10 @@ abstract class makeEbook {
         $this->useCSS = TRUE;
     }
 
+    public function removeImgs() {
+        $this->removeImgs = TRUE;
+    }
+    
     /**
      * executing crawler / parser e putting the result in makefile object
      */
@@ -156,6 +182,12 @@ abstract class makeEbook {
             // get the array with results
             $crawler = $this->crawler->getResult();
 
+            // used to remove img tags from html/document
+            if($this->removeImgs) {
+                $this->parser->parserRemoveTagsImgs();
+            }
+
+            
             // foreach item of result make parser
             foreach($crawler as $item) {
                 // parsing html file, get node list from header/content
@@ -163,11 +195,19 @@ abstract class makeEbook {
                 // generate new dom structure
                 $this->parser->setDom($this->content_id, $this->header_id, $this->clear_id);
             }
-
+            
+            if( count($this->parser->getImgs()) > 0 ) {
+                $this->parserImg = new \MakeEbook\ParserImg($this->url_host, $this->url_path);
+                //$this->parserImg->setUrlsArray(array($item));
+                $this->parserImg->setUrlsArray($this->parser->getImgs());
+                $this->parserImg->setImg();
+            }
+            
             // getting css from source, if set the option
-            if($this->useCSS==\TRUE) {
+            if($this->useCSS) {
                 $this->parserCSS = new \MakeEbook\ParserCSS($this->url_host, $this->url_path);
-                $this->parserCSS->setUrlsNodeList($this->parser->getCSS());
+                //$this->parserCSS->setUrlsNodeList($this->parser->getCSS());
+                $this->parserCSS->setUrlsArray($this->parser->getCSS());
                 $this->parserCSS->setCSS();
                 $this->parser->appendDom($this->parserCSS->getCSS());
             }

@@ -38,7 +38,10 @@ class makeEbookFileTest extends \PHPUnit_Framework_TestCase {
         $this->object = new \MakeEbook\makeEbookFile($urls, 'makeEbook-test.html');
         $this->object->setHeader('header');
         $this->object->setContent('content');
-        $this->object->setClear(array('id'=>'nav', 'class'=>'clearfix'));
+        $this->object->setClear(array(
+                                      array('id'=>'nav'), 
+                                      array('class'=>'clearfix')
+                                     ));
     }
 
     /**

@@ -39,7 +39,10 @@ class makeEbookHTMLTest extends \PHPUnit_Framework_TestCase {
             $this->object = new makeEbookHTML($urls);
             $this->object->setHeader('header');
             $this->object->setContent('content');
-            $this->object->setClear(array('id'=>'nav', 'class'=>'clearfix'));
+            $this->object->setClear(array(
+                                          array('id'=>'nav'), 
+                                          array('class'=>'clearfix')
+                                         ));
             $this->object->exec();
         }
         catch (Exception $e) {

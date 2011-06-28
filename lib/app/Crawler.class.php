@@ -75,15 +75,19 @@ class Crawler {
      * Define the filename to curl drop content
      * @param string $filename name of the file to write content
      */
-    public function setFile($filename) {
+    private function setFile($filename) {
+        throw new Exception("Method Disabled !)");
+        /*
         try {
             // create and open file
-            $this->handler = \fopen($filename, 'w');
+            $this->handler = \fopen(__DIR__ . '/' . makeEbook::MAKEEBOOK_FILESAVE_PATH . $filename, 'w');
             // curl option to file
             curl_setopt($this->ch, CURLOPT_FILE, $this->handler);
         } catch (Exception $e) {
             throw new Exception("Crawler File Error! \r\n ({$e->getMessage()})");
         }
+         * 
+         */
     }
 
     /**
