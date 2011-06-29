@@ -1,7 +1,17 @@
 <?php
+/**
+ * crawler to get files/html from internet 
+ * @package makeEbook
+ * @author  Fernando Dias
+ */
 namespace MakeEbook;
 
-class Crawler {
+/**
+ * crawler to get files/html from internet 
+ * @package makeEbook
+ * @author  Fernando Dias
+ */
+ class Crawler {
 
     /**
      * @var cURL handle

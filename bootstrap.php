@@ -1,5 +1,11 @@
 <?php
 /**
+ * bootstrap file
+ * @package makeEbook
+ * @author  Fernando Dias
+ */
+
+/**
  * Main Auto Load Class Function
  * @param string $class
  */

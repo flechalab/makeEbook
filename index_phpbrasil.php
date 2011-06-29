@@ -1,7 +1,17 @@
 <?php
+/**
+ * file to generate html/pdf from phpbrasil
+ * article about php 5.3 news (test)
+ * @package makeEbook
+ * @author  Fernando Dias
+ */
 
+// set to report only errors
 error_reporting(E_ERROR);
 
+/**
+ * including bootstrap
+ */
 require_once('bootstrap.php');
 
 try {

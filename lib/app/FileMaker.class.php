@@ -1,6 +1,16 @@
 <?php
+/**
+ * filemaker generate a file (string, file - html, pdf) with specific string/html
+ * @package makeEbook
+ * @author  Fernando Dias
+ */
 namespace MakeEbook;
 
+/**
+ * class to generate a file from a string 
+ * @package makeEbook
+ * @author  Fernando Dias
+ */
 class FileMaker {
 
     private $html = false;

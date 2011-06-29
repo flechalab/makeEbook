@@ -1,7 +1,15 @@
 <?php
-
+/**
+ * Class to parsing urls from list/menu from html file
+ * @package makeEbook
+ * @author  Fernando Dias
+ */
 namespace MakeEbook;
 
+/**
+ * parserUrl class is a extension from parser to extract urls of list/menu from html file 
+ * @package makeEbook
+ */
 class ParserUrl extends Parser {
 
     /**

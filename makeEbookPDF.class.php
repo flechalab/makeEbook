@@ -6,11 +6,20 @@
  */
 namespace MakeEbook;
 
-// tcpdf
+/**
+ * external lib tcpdf - language
+ */
 require_once('lib/third/tcpdf/config/lang/por.php');
+
+/**
+ * external lib tcpdf
+ */
 require_once('lib/third/tcpdf/tcpdf.php');
 
-
+/**
+ * class extended to generate pdf file
+ * @package makeEbook
+ */
 class makeEbookPDF extends makeEbook {
 
     /**

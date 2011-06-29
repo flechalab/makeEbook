@@ -6,7 +6,10 @@
  */
 namespace MakeEbook;
 
-
+/**
+ * abstract (main) makeEbook class
+ * @package makeEbook
+ */
 abstract class makeEbook {
 
     /**

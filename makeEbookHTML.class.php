@@ -6,6 +6,11 @@
  */
 namespace MakeEbook;
 
+/**
+ * class extended to print html
+ * @package makeEbook
+ */
+
 class makeEbookHTML extends makeEbook {
 
     /**

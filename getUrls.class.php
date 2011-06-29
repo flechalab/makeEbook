@@ -1,4 +1,10 @@
 <?php
+/**
+ * getUrl class file
+ * @package makeEbook
+ * @author  Fernando Dias
+ */
+
 namespace MakeEbook;
 
 /**

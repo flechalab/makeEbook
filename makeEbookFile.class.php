@@ -6,6 +6,10 @@
  */
 namespace MakeEbook;
 
+/**
+ * class extended to generate file (html/txt)
+ * @package makeEbook
+ */
 class makeEbookFile extends makeEbook {
 
     /**

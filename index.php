@@ -1,7 +1,17 @@
 <?php
+/**
+ * main file, index that generate html/pdf from
+ * progit book, an ebook about working with git (test)
+ * @package makeEbook
+ * @author  Fernando Dias
+ */
 
+// set to report only errors
 error_reporting(E_ERROR);
 
+/**
+ * including bootstrap
+ */
 require_once('bootstrap.php');
 
 try {
