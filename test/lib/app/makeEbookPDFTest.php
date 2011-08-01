@@ -2,7 +2,7 @@
 
 namespace MakeEbook;
 
-require_once dirname(__FILE__) . '/../makeEbookPDF.class.php';
+require_once dirname(__FILE__) . '/../../../lib/app/makeEbookPDF.class.php';
 
 /**
  * Test class for makeEbookPDF.

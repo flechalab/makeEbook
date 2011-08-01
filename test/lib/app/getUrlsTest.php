@@ -2,7 +2,7 @@
 
 namespace MakeEbook;
 
-require_once dirname(__FILE__) . '/../getUrls.class.php';
+require_once dirname(__FILE__) . '/../../../lib/app/getUrls.class.php';
 
 /**
  * Test class for getUrls.

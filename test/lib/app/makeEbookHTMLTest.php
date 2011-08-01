@@ -2,7 +2,7 @@
 
 namespace MakeEbook;
 
-require_once(__DIR__ . '/../makeEbookHTML.class.php');
+require_once(__DIR__ . '/../../../lib/app/makeEbookHTML.class.php');
 
 /**
  * Test class for makeEbookHTML.
