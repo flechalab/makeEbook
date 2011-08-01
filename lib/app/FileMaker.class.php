@@ -1,9 +1,4 @@
 <?php
-/**
- * filemaker generate a file (string, file - html, pdf) with specific string/html
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
 
 /**

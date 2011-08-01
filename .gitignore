@@ -1,1 +1,6 @@
-/nbproject/private/
+.gitignore
+nbproject/
+phpdoc/
+files/
+index.php
+/lib/third/dompdf/

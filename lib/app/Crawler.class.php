@@ -1,9 +1,4 @@
 <?php
-/**
- * crawler to get files/html from internet 
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
 
 /**

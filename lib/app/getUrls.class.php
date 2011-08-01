@@ -1,14 +1,8 @@
 <?php
-/**
- * getUrl class file
- * @package makeEbook
- * @author  Fernando Dias
- */
-
 namespace MakeEbook;
 
 /**
- * Class to get a url and a defined id/class to get all the a href links
+ * get an url and a defined id/class to get all the a href links
  * @package makeEbook
  * @author  Fernando Dias
  */
@@ -43,7 +37,7 @@ class getUrls {
         $this->crawler->exec();
         $this->result  = $this->crawler->getResult();
         $this->parser  = new \MakeEbook\ParserUrl();
-        $this->parser->setUrl($url);
+        $this->parser->setMainUrl($url);
     }
     
     /**
@@ -74,6 +68,14 @@ class getUrls {
      */
     public function getUrls() {
         return $this->parser->getUrls();
+    }
+    
+    /**
+     * remove a unecessary url from array
+     * @param string $url 
+     */
+    public function removeUrls($urls) {
+        $this->parser->removeUrls($urls);
     }
 
 }

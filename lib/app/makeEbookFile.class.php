@@ -1,14 +1,10 @@
 <?php
-/**
- * Description : Class to generate an FILE (binarie data) from specific url
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
 
 /**
  * class extended to generate file (html/txt)
  * @package makeEbook
+ * @author  Fernando Dias
  */
 class makeEbookFile extends makeEbook {
 

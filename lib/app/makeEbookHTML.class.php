@@ -1,14 +1,10 @@
 <?php
-/**
- * Description : Class to generate HTML from specific url
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
 
 /**
  * class extended to print html
  * @package makeEbook
+ * @author  Fernando Dias
  */
 
 class makeEbookHTML extends makeEbook {

@@ -1,24 +1,10 @@
 <?php
-/**
- * Description : Class to generate PDF from specific url
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
-
-/**
- * external lib tcpdf - language
- */
-require_once('lib/third/tcpdf/config/lang/por.php');
-
-/**
- * external lib tcpdf
- */
-require_once('lib/third/tcpdf/tcpdf.php');
 
 /**
  * class extended to generate pdf file
  * @package makeEbook
+ * @author  Fernando Dias
  */
 class makeEbookPDF extends makeEbook {
 
@@ -36,6 +22,11 @@ class makeEbookPDF extends makeEbook {
      */
     public function __construct($url, $filename) {
         try {
+            //external lib tcpdf - language
+            require_once(__DIR__ . '/../third/tcpdf/config/lang/por.php');
+            //external lib tcpdf
+            require_once(__DIR__ . '/../third/tcpdf/tcpdf.php');
+            
             parent::__construct($url);
             $this->filename = makeEbook::MAKEEBOOK_ROOT_PATH . 
                               makeEbook::MAKEEBOOK_FILESAVE_PATH . $filename;

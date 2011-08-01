@@ -1,13 +1,9 @@
 <?php
-/**
- * class parser to get css files from html file
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
 
 /**
  * parser to get css files from html file
+ * @author  Fernando Dias
  * @package makeEbook
  */
 class ParserCSS {

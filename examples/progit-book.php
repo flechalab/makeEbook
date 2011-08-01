@@ -12,22 +12,21 @@ error_reporting(E_ERROR);
 /**
  * including bootstrap
  */
-require_once('bootstrap.php');
+require_once('../config/bootstrap.php');
 
 try {
 
     // file name
-    $filename = 'progit-book';
+    $filename = 'progit-book-img';
     
     // getting the urls from book
     $urls = new \MakeEbook\getUrls('http://progit.org/book/');
     $urls->removeTags('div', 'buy-book-toc');
+    $urls->removeUrls(array('commands.html'));
     $urls->setMenu('ul', 'id', 'toc');
-
+    
     // generate html/pdf from urls 
-    //$ebook = new \MakeEbook\makeEbookHTML($urls->getUrls);
-    //$ebook = new \MakeEbook\makeEbookFILE($urls->getUrls(), "{$filename}.html");
-    $ebook = new \MakeEbook\makeEbookPDF($urls->getUrls(), "{$filename}.pdf");
+    $ebook = new \MakeEbook\makeEbookFILE($urls->getUrls(), "{$filename}.html");
 
     $ebook->setHeader('header');
     $ebook->setContent('content');

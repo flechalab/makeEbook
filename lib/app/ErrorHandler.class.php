@@ -1,14 +1,10 @@
 <?php
-/**
- * class to generate throws exceptions when a warning is generated
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
 
 /**
  * catch errors / warnings / notices and throws exceptions
  * @package makeEbook
+ * @author  Fernando Dias
  */
 class ErrorHandler {
     /**

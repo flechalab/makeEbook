@@ -1,14 +1,10 @@
 <?php
-/**
- * Class to parsing urls from list/menu from html file
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
 
 /**
  * parserUrl class is a extension from parser to extract urls of list/menu from html file 
  * @package makeEbook
+ * @author  Fernando Dias
  */
 class ParserUrl extends Parser {
 
@@ -16,20 +12,34 @@ class ParserUrl extends Parser {
      * main url to crawler/parser
      * @var string
      */
-    private $main_url;
+    private $mainUrl;
+    
+    /**
+     * host url to crawler/parser
+     * @var string
+     */
+    private $host;
     
     /**
      * array with urls from menu/list of files defined to generate file
      * @var array
      */
-    private $menu_urls = array();
+    private $menuUrls = array();
+    
+    /**
+     * array with urls from menu that can be removed
+     * @var array
+     */
+    private $removeUrls = array();
 
     /**
-     * main url from files 
+     * main url from files and set host url
      * @param string $url 
      */
-    public function setUrl($url) {
-        $this->main_url = $url;
+    public function setMainUrl($url) {
+        $this->mainUrl = $url;
+        $this->host    = \parse_url($this->mainUrl, \PHP_URL_SCHEME) . '://' .
+                         \parse_url($this->mainUrl, \PHP_URL_HOST);
     }
     
     /**
@@ -64,35 +74,34 @@ class ParserUrl extends Parser {
                     $links[] = $item->getAttribute('href');
                 }
             }
-            //@todo query get all items from menu (loop), not just item 0, 
-            // sometimes it's necessary because there is a lot of div/items with links that would
-            // like to get href (links)
-            //$menu_itens = $xp->query(".//a", $menu->item(0));
             
             // get each item from menu and add to array
             //foreach ($menu_itens as $item) {
             foreach ($links as $href) {
                 
                 //$href = $item->getAttribute('href');
-                                
-                if(substr($href, 0, 7)=='http://') {
+
+                // ignore external links
+                if(substr($href, 0, 7)=='http://' && strpos($href, $this->mainUrl)==FALSE) {
+                    continue;
+                }
+                
+                if(in_array($href, $this->removeUrls)) {
                     continue;
                 }
                 
                 if(substr($href, 0, 1)=='/') {
-                    $host = (\parse_url($this->main_url, \PHP_URL_SCHEME)) . '://' .
-                    (\parse_url($this->main_url, \PHP_URL_HOST));
-                    $href = $host . $href;
+                    $href = $this->host . $href;
                 }
                 else {
-                    $href = $this->main_url . $href;
+                    $href = $this->mainUrl . $href;
                 }
                 
-                if(\in_array($href, $this->menu_urls)) {
+                if(\in_array($href, $this->menuUrls)) {
                     continue;
                 }
                 
-                $this->menu_urls[] = $href;
+                $this->menuUrls[] = $href;
             }
         }
         catch(Exception $e) {
@@ -106,7 +115,15 @@ class ParserUrl extends Parser {
      * @return array
      */
     public function getUrls() {
-        return $this->menu_urls;
+        return $this->menuUrls;
+    }
+    
+    /**
+     * remove a unecessary url from array
+     * @param array $urls
+     */
+    public function removeUrls($urls) {
+        $this->removeUrls = $urls;
     }
 
 }

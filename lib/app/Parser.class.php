@@ -1,14 +1,10 @@
 <?php
-/**
- * main parser class
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
 
 /**
  * main parser class to extract div ou specific part of html file
  * @package makeEbook
+ * @author  Fernando Dias
  */
 class Parser {
 

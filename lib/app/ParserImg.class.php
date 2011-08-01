@@ -1,9 +1,4 @@
 <?php
-/**
- * class parser to get images from html file
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
 
 /**

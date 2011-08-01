@@ -1,14 +1,10 @@
 <?php
-/**
- * Class to generate html/pdf/file from specifics url
- * @package makeEbook
- * @author  Fernando Dias
- */
 namespace MakeEbook;
 
 /**
  * abstract (main) makeEbook class
  * @package makeEbook
+ * @author  Fernando Dias
  */
 abstract class makeEbook {
 
@@ -20,7 +16,7 @@ abstract class makeEbook {
     /**
      * path to save files
      */
-    const MAKEEBOOK_FILESAVE_PATH = '/files/';
+    const MAKEEBOOK_FILESAVE_PATH = '/../../files/';
 
     /**
      * constant to identify the message error of makeEbook class
@@ -105,7 +101,6 @@ abstract class makeEbook {
         try {
             // get main url
             $this->parserUrl($url);
-
             // set objects
             $this->crawler = new Crawler($url);
             $this->parser  = new Parser();
