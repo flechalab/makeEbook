@@ -87,8 +87,20 @@ class Parser {
 
             preg_match_all('/<head(.*)<\/head>/s', $html, $head);
             preg_match_all('/<body(.*)<\/body>/s', $html, $body);
-            $head = preg_replace('@<script[^>](.*?)>(.*?)</script>@si', '', $head[0][0]);
-            $body = preg_replace('@<script[^>](.*?)>(.*?)</script>@si', '', $body[0][0]);
+            if(isset($head[0][0])) {
+                $head = preg_replace('@<script[^>](.*?)>(.*?)</script>@si', '', $head[0][0]);
+            }
+            else {
+                $head = false;
+            }
+            
+            if(isset($body[0][0])) {
+                $body = preg_replace('@<script[^>](.*?)>(.*?)</script>@si', '', $body[0][0]);
+            }
+            else {
+                $body = false;
+            }
+            
             $body = preg_replace('/<\/?center>/s', '', $body);
 
             // removing div
@@ -123,7 +135,7 @@ class Parser {
 
         $exp = '/<' . $tag;
 
-        // --- including id ---
+        // TODO --- including id ---
         if($id) {
             // @todo do it better
             //$exp .= '(.*[^>])? id=[\\\'\"]?' . $id . '[\\\'\"]?(.*[^>])?';
@@ -131,7 +143,7 @@ class Parser {
             $exp .= ' id="' . $id . '"';
         }
         
-        // --- including clsss ---
+        // TODO --- including clsss ---
         if($class) {
             //$exp .= '(.*[^>])? class=[\\\'\"]?' . $class . '[\\\'\"]?(.*[^>])?';
         }
@@ -189,7 +201,11 @@ class Parser {
                 $attr   = key($item);
                 $value  = current($item);
                 $remove = $xp->query("//*[@{$attr} = '{$value}']");
-                $this->content->item(0)->removeChild($remove->item(0));
+                
+                $removeQt = $remove->length;
+                if($removeQt>0) {
+                    $this->content->item(0)->removeChild($remove->item(0));
+                }
             }
 
             // css

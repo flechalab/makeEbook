@@ -79,10 +79,8 @@ class ParserUrl extends Parser {
             //foreach ($menu_itens as $item) {
             foreach ($links as $href) {
                 
-                //$href = $item->getAttribute('href');
-
-                // ignore external links
-                if(substr($href, 0, 7)=='http://' && strpos($href, $this->mainUrl)==FALSE) {
+                // ignore external links                
+                if( (substr($href, 0, 7)=='http://') && (strpos($href, $this->mainUrl)===FALSE) ) {
                     continue;
                 }
                 
@@ -90,7 +88,10 @@ class ParserUrl extends Parser {
                     continue;
                 }
                 
-                if(substr($href, 0, 1)=='/') {
+                if( strpos($href, $this->mainUrl) >= 0 ) {
+                    $href = $href;
+                }
+                else if(substr($href, 0, 1)=='/') {
                     $href = $this->host . $href;
                 }
                 else {

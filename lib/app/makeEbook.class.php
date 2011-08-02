@@ -39,22 +39,22 @@ abstract class makeEbook {
      * crawler object to get the html from urls
      * @var Crawler
      */
-    protected $crawler;
+    public $crawler;
     /**
      * parser object to get the appropriate content
      * @var Parser
      */
-    protected $parser;
+    public $parser;
     /**
      * parser object to get the appropriate content from CSS
      * @var ParserCSS
      */
-    protected $parserCSS;
+    public $parserCSS;
     /**
      * object to generate the specific filetype
      * @var FileMaker
      */
-    protected $file;
+    public $file;
 
     /**
      * log info
@@ -185,7 +185,6 @@ abstract class makeEbook {
                 $this->parser->parserRemoveTagsImgs();
             }
 
-            
             // foreach item of result make parser
             foreach($crawler as $item) {
                 // parsing html file, get node list from header/content
