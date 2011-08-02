@@ -48,7 +48,7 @@ class Parser {
      * css array with list from css files from html
      * @var array 
      */
-    protected $css;
+    protected $css = array();
     
     /**
      * imgs path array
@@ -145,7 +145,7 @@ class Parser {
         
         // TODO --- including clsss ---
         if($class) {
-            //$exp .= '(.*[^>])? class=[\\\'\"]?' . $class . '[\\\'\"]?(.*[^>])?';
+            $exp .= '(.*[^>])? class="' . $class . '" (.*[^>])?';
         }
 
         $exp .= '>(.*?)[^<]';
@@ -160,7 +160,10 @@ class Parser {
      * define rule to remove img tags
      */
     public function parserRemoveTagsImgs() {
-        $this->parserRemoveTags[] = '/<img(.*)?src=\"(.*).[png|jpg|jpeg|gif]\"(.*)?\/>/i';
+        //TODO - do a better regex
+        //$this->parserRemoveTags[] = '/<img(.*)?src=\"(.*).[png|jpg|jpeg|gif]\"(.*)?\/>/i';
+        $this->parserRemoveTags[] = '/<img(.*)?src=\"(.*)\"(.*)?\/>/i';
+        $this->parserRemoveTags[] = "/<img(.*)?src='(.*)'(.*)?\/>/i";
     }
     
     /**
@@ -230,7 +233,7 @@ class Parser {
             }
             
             // importing header node
-            if($this->pages==0 && isset($header_id)) {
+            if($this->pages==0 && isset($header_id) && $this->header->length>0) {
                 $this->appendDom($this->header->item(0));
             }
 

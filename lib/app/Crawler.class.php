@@ -38,6 +38,7 @@ namespace MakeEbook;
 
     /**
      * start curl handle
+     * @param mixed $urls 
      */
     public function __construct($urls=false) {
         try {

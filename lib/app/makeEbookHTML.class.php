@@ -12,7 +12,7 @@ class makeEbookHTML extends makeEbook {
     /**
      * object constructor, extends main makeEbook construct
      * set config to crawler to string result
-     * @param string $url
+     * @param mixed $url
      */
     public function __construct($urls) {
         try {
